@@ -36,7 +36,7 @@
     } else if ([@"RECORD_AUDIO" isEqualToString:permission]) {
         [self recordAudioPermission:result];
     } else if([@"PHOTO_LIBRARY" isEqualToString:permission]) {
-        
+        [self requestPhotoLibraryPermission:result];
     } else {
         result(FlutterMethodNotImplemented);
     }

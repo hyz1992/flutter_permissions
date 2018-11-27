@@ -52,7 +52,10 @@ static PermissionTool *tools;
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0
     PHAuthorizationStatus authStatus =[PHPhotoLibrary authorizationStatus];
     switch (authStatus) {
-        case AVAuthorizationStatusNotDetermined: {
+        case PHAuthorizationStatusAuthorized:
+            block(3);
+            break;
+        case PHAuthorizationStatusNotDetermined: {
             [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
                 if (status == PHAuthorizationStatusAuthorized) {
                     [PermissionTool returnMainThread:^{
@@ -66,13 +69,13 @@ static PermissionTool *tools;
             }];
             break;
         }
-        case AVAuthorizationStatusRestricted: {
+        case PHAuthorizationStatusRestricted: {
             [PermissionTool returnMainThread:^{
                 block(1);
             }];
             break;
         }
-        case AVAuthorizationStatusDenied: {
+        case PHAuthorizationStatusDenied: {
             [PermissionTool returnMainThread:^{
                 block(2);
             }];
